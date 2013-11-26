@@ -1,0 +1,8 @@
+Input: rndpassword -v -n 30 -t num -t alnum -v -n 19
+Actual: Version: 0.1 Password: aaaaaaaaaaaaaaaaaaa
+Expected: Version: 0.1 Password: aaaaaaaaaaaaaaaaaaaa
+=====END-ERROR=====
+Input: rndpassword -vt
+Actual: Error: Invalid Switch
+Expected: Error to Test Script
+=====END-ERROR=====

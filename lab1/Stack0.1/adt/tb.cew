@@ -1,0 +1,150 @@
+#================================================================--
+# Design Unit  : cew testbench for stack
+#
+# File Name    : tb.cew
+#
+# Purpose      : unit testing
+#
+# Note         :
+#
+# Limitations  :
+#
+# Errors       : none known
+#
+# Modules      : adt::stack
+#
+# Dependences  : cew
+#
+# Author       : Peter Walsh, Vancouver Island University
+#
+# System       : Perl (Linux)
+#
+#------------------------------------------------------------------
+# Revision List
+# Version      Author  Date    Changes
+# 1.0          PW      Oct 12  New version
+#================================================================--
+
+$|=1;
+use strict;
+use warnings;
+
+include(CewDir/bin/cew.pl)
+
+use lib '../';
+use adt::stack;
+
+cew_Variables
+
+# Local Function Load (s, n);
+# pushes n values on the stack from
+# the sequence 10, 100, 1000 ... 
+# note: no exception checking
+
+sub load {
+   my $s=shift @_;
+   my $n=shift @_;
+   
+   for (my $i=0; $i<$n; $i++) {
+      $s->push(($i+1)*10);
+   }
+}
+
+#############
+# empty stack
+#############
+#Stack Size default
+my $stack0=adt::stack->new();
+cew_Ncase(load($stack0 ,0); $stack0->push(10) ,$stack0->top() ,10 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+$stack0=adt::stack->new();
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase(load($stack0 ,0); $stack0->pop() ,$stack0->get_empty() ,1 ,!= );
+$stack0=adt::stack->new();
+cew_Ncase(load($stack0 ,0); $stack0->top() ,$stack0->get_empty() ,1 ,!= );
+
+# Stack Size 10
+my $stack0=adt::stack->new(10);
+cew_Ncase(load($stack0 ,0); $stack0->push(10) ,$stack0->top() ,10 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+$stack0=adt::stack->new(10);
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase(load($stack0 ,0); $stack0->pop() ,$stack0->get_empty() ,1 ,!= );
+$stack0=adt::stack->new(10);
+cew_Ncase(load($stack0 ,0); $stack0->top() ,$stack0->get_empty() ,1 ,!= );
+
+#################
+# half full stack
+#################
+# Default Stack Size
+$stack0=adt::stack->new();
+cew_Ncase(load($stack0 ,2); $stack0->push(30) ,$stack0->top() ,30 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+$stack0=adt::stack->new();
+cew_Ncase(load($stack0 ,2) ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->pop() ,$stack0->top() ,10 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+
+#Stack Size 10
+$stack0=adt::stack->new(10);
+cew_Ncase(load($stack0 ,2); $stack0->push(30) ,$stack0->top() ,30 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+$stack0=adt::stack->new(10);
+cew_Ncase(load($stack0 ,2) ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->pop() ,$stack0->top() ,10 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+
+############
+# full stack
+############
+#Stack Size Default
+$stack0=adt::stack->new();
+cew_Ncase(load($stack0 ,5); ,$stack0->get_full() ,0 ,!= );
+cew_Ncase($stack0->push(30) ,$stack0->top() ,50 ,!= );
+cew_Ncase( ,$stack0->get_full() ,1 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->pop() ,$stack0->top() ,40 ,!= );
+cew_Ncase( ,$stack0->get_full() ,1 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+$stack0=adt::stack->new();
+cew_Ncase(load($stack0 ,5) ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->pop() ,$stack0->top() ,40 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->push(30) ,$stack0->top() ,30 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+# Stack Size 10
+$stack0=adt::stack->new(10);
+cew_Ncase(load($stack0 ,10); ,$stack0->get_full() ,0 ,!= );
+cew_Ncase($stack0->push(30) ,$stack0->top() ,100 ,!= );
+cew_Ncase( ,$stack0->get_full() ,1 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->pop() ,$stack0->top() ,90 ,!= );
+cew_Ncase( ,$stack0->get_full() ,1 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+$stack0=adt::stack->new(10);
+cew_Ncase(load($stack0 ,10) ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->pop() ,$stack0->top() ,90 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+cew_Ncase($stack0->push(30) ,$stack0->top() ,30 ,!= );
+cew_Ncase( ,$stack0->get_full() ,0 ,!= );
+cew_Ncase( ,$stack0->get_empty() ,0 ,!= );
+
+cew_Summary

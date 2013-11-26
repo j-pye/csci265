@@ -1,0 +1,22 @@
+--- passServer.pl	2013-09-12 09:21:32.000000000 -0700
++++ passServerTest.pl	2013-09-26 09:16:35.000000000 -0700
+@@ -1,5 +1,5 @@
+ #!/usr/bin/perl
+-# Tcp  password generator server (PROTOTYPE)
++# Tcp  password generator server Tester (PROTOTYPE)
+ # Peter Walsh csci 265
+ 
+ use lib '/home/faculty/pwalsh/lib/x86_64-linux-gnu-thread-multi';
+@@ -40,6 +40,12 @@
+ 
+    for ($i=0; $i<$pnum; $i++) {
+       $pass = $pgen->get;
++      # added for testing
++      if ($ptype eq "num") { 
++         $pass=~s/./0/g;
++      } else {
++         $pass=~s/./a/g;
++      }
+       print "$pass \n";
+       print $new_sock  $pass , "\n"; 
+    }
