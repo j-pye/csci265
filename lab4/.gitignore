@@ -1,0 +1,7 @@
+stack_adt/CewDir/
+exc/CewDir/
+stack_adt/tb.cew
+stack_adt/stack_tst.pl
+exc/exception_tst.pl
+exc/tb.cew
+exc/testPlan

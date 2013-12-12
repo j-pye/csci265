@@ -1,0 +1,38 @@
+#include "IntSet.h"
+#include "Exceptions.h"
+#include <stdio.h>
+
+include(CewDir/bin/cew.c)
+
+
+int main() {
+
+	cew_Variables
+
+	/******************************************************************
+	Empty Simple Set 
+	******************************************************************/
+	cew_Ecase(SSInit();SSAdd(10);SSDel(10);SSDel(10), NotFoundExc)
+	cew_Ncase(SSInit();SSAdd(10);SSDel(10),SSSize(), 0)
+	cew_Ncase(SSInit();SSAdd(10);SSDel(10); (1/0),SSSize(), 0)
+	cew_Ecase(SSInit();SSAdd(10), FullExc) 				/* Should Fail*/
+
+	/****************************************************************** 
+	Half Full Simple Set 
+	******************************************************************/
+	cew_Ecase(SSInit();SSAdd(9);SSDel(10);SSSize(), 1)	/* Should Fail*/
+   cew_Ncase(SSInit();SSAdd(10),SSSize(), 1)
+	cew_Ncase(SSInit();SSAdd(10), SSIsMem(10), 1)
+
+	/****************************************************************** 
+	Full Simple Set 	
+	******************************************************************/
+	cew_Ecase(SSInit();SSAdd(10);SSAdd(10), DuplicateExc)
+	cew_Ecase(SSInit();SSAdd(10);SSAdd(10), FullExc)	/* Should Fail*/
+	cew_Ncase(SSInit();SSAdd(10);SSAdd(11), SSSize(), 2)
+	cew_Ecase(SSInit();SSAdd(10);SSAdd(11);SSAdd(12), FullExc)
+
+	cew_Summary
+	
+	return 0;
+}

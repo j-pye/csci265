@@ -1,0 +1,45 @@
+########
+# Part A
+########
+1. Jane will run in the current shell beacuse it does not contain the 
+brackets.
+2. Oliver will be in the new shell because it does contain the brackets.
+
+########
+# Part B
+########
+List containing the gcov line-coverage % statistic for LineStorage, 
+WordTable and ShiftSort.
+
+1. WordTable
+File 'WordTable.c'
+Lines Executed: 68.25% of 63
+
+2. LineStorage
+File 'LineStorage.c'
+Lines Executed: 84.62% of 91
+
+3. ShiftSort
+File 'ShiftSort.c'
+Lines Executed: 88.71% of 62
+
+########
+# Part C
+########
+Demonstration of make gcov showing atleast 69% coverage.
+File 'WordTable.c'
+Lines executed:70.49% of 61
+
+Modified Code in WordTable.c
+============================
+        if(fp != NULL)
+        {
+          numWords = 0;
+          arrayLength = DFLTNUMNOISEWORDS;
+          wordList = calloc(arrayLength,sizeof(char *));
+          if (wordList == NULL)
+          {
+            fclose(fp);
+            return KWMEMORYERROR;
+          }
+        }

@@ -1,0 +1,182 @@
+Reading database from /home/justin/school/csci265/lab6/D/stack_adt/cover_db
+
+
+----------------------------------- ------ ------ ------ ------ ------ ------
+File                                  stmt   bran   cond    sub   time  total
+----------------------------------- ------ ------ ------ ------ ------ ------
+stack.pm                              87.0  100.0    n/a   90.0  100.0   89.1
+Total                                 87.0  100.0    n/a   90.0  100.0   89.1
+----------------------------------- ------ ------ ------ ------ ------ ------
+
+
+Run:          tb.pl
+Perl version: 5.18.1
+OS:           linux
+Start:        Wed Dec  4 19:15:06 2013
+Finish:       Wed Dec  4 19:15:06 2013
+
+stack.pm
+
+line  err   stmt   bran   cond    sub   time   code
+1                                              package stack_adt::stack;
+2                                              #================================================================--
+3                                              # Design Unit  : stack module
+4                                              #
+5                                              # File Name    : stack.pm
+6                                              #
+7                                              # Purpose      : implements stack adt
+8                                              #
+9                                              # Note         :
+10                                             #
+11                                             # Limitations  :
+12                                             #
+13                                             # Errors       : none known
+14                                             #
+15                                             # Modules      : none
+16                                             #
+17                                             # Dependences  : none
+18                                             #
+19                                             # Author       : Peter Walsh, Vancouver Island University
+20                                             #
+21                                             # System       : Perl (Linux)
+22                                             #
+23                                             #------------------------------------------------------------------
+24                                             # Revision List
+25                                             # Version      Author  Date    Changes
+26                                             # 0.1          PW      Oct 1   New version
+27                                             # 0.2          PW      Oct 12  move empty and full flag-exceptions
+28                                             #                              to an proper exception class
+29                                             #=========================================================
+30                                             
+31                                             $|=1;
+32                                             
+33             1                    1      1   use strict;
+               1                           1   
+               1                          15   
+34             1                    1      1   use warnings;
+               1                           1   
+               1                          13   
+35                                             
+36             1                    1      1   use lib '../';
+               1                           0   
+               1                           2   
+37             1                    1    119   use exc::exception;
+               1                           1   
+               1                         147   
+38                                             
+39                                             sub new {
+40             4                    4      4      my $class=shift @_;
+41             4                           1      my $p1=shift @_;
+42                                             
+43             4                           4      my $self = {maxsiz => 5,
+44                                                            stack => []
+45                                                           };
+46                                             
+47             4    100                    5      if (defined($p1)) {
+48             3                           3         $self->{maxsiz}=$p1;
+49                                                }
+50                                             
+51             4                           1      bless ($self, $class);
+52                                             
+53             4                           4      return $self;
+54                                             }
+55                                             
+56                                             
+57                                             sub size {
+58           633                  633    218      my $self = shift @_;
+59                                             
+60           633                         174      return scalar  @{$self->{stack}};
+             633                         614   
+61                                             }
+62                                             
+63                                             sub push {
+64           116                  116     56      my $self = shift @_;
+65           116                          41      my $val = shift @_;
+66                                             
+67           116    100                   57      if ($self->size() == $self->{maxsiz}) {
+68             1                           1         die(exc::exception->new("full"));
+69                                                }
+70                                             
+71           115                          39      push (@{$self->{stack}}, $val);
+             115                          56   
+72                                             
+73           115                          61      return 0;
+74                                             
+75                                             }
+76                                             
+77                                             sub pop {
+78           104                  104     25      my $self = shift @_;
+79                                             
+80           104    100                   64      if ($self->size() == 0) {
+81             1                           1         die(exc::exception->new("empty"));
+82                                                }
+83                                             
+84           103                          47      pop (@{$self->{stack}});
+             103                          46   
+85                                             
+86           103                          38      return 0;
+87                                             }
+88                                             
+89                                             
+90                                             sub top {
+91           207                  207    101      my $self = shift @_;
+92                                             
+93           207    100                   89      if ($self->size() == 0) {
+94             1                           2         die(exc::exception->new("empty"));
+95                                                }
+96                                             
+97           206                          56      return ${$self->{stack}}[$self->size()-1];
+             206                         140   
+98                                             }
+99                                             
+100                                            # for interactive testing only
+101                                            
+102                                            sub dump {
+103   ***      0                    0             my $self = shift @_;
+104                                               
+105   ***      0                                  print ("Stack Dump\n");
+106   ***      0                                  for (my $i=0; $i < $self->size(); $i++) {
+107   ***      0                                     print (${$self->{stack}}[$i], "\n");
+      ***      0                               
+108                                               }
+109                                            
+110   ***      0                                  return 0;
+111                                            }
+112                                            
+113                                            1;
+
+
+Branches
+--------
+
+line  err      %   true  false   branch
+----- --- ------ ------ ------   ------
+47           100      3      1   if (defined $p1)
+67           100      1    115   if ($self->size == $$self{'maxsiz'})
+80           100      1    103   if ($self->size == 0)
+93           100      1    206   if ($self->size == 0)
+
+
+Covered Subroutines
+-------------------
+
+Subroutine Count Location    
+---------- ----- ------------
+BEGIN          1 stack.pm:33 
+BEGIN          1 stack.pm:34 
+BEGIN          1 stack.pm:36 
+BEGIN          1 stack.pm:37 
+new            4 stack.pm:40 
+pop          104 stack.pm:78 
+push         116 stack.pm:64 
+size         633 stack.pm:58 
+top          207 stack.pm:91 
+
+Uncovered Subroutines
+---------------------
+
+Subroutine Count Location    
+---------- ----- ------------
+dump           0 stack.pm:103
+
+

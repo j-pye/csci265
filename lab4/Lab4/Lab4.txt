@@ -1,0 +1,10 @@
+Lab 4
+============================================
+From my experience, we need to make 3 branches
+-master
+-dev (Developing stage)
+-testing (Comes with test case folder)
+
+we develop everything in the 'dev' branch, and merge it to the 'testing' branch. If we found an error, then back to 'dev' branch, commit the changes and push the changes to 'testing' branch
+try our test case again,and if it's succeed then, merge the 'dev' branch with the 'master' branch
+
